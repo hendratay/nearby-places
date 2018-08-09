@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Nearby</string>
+
+    <string name="about">About</string>
+    <string name="review">Review</string>
+    <string name="gallery">Gallery</string>
+</resources>
