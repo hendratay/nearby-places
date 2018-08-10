@@ -23,7 +23,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
 
         val placeId = intent.getStringExtra(PLACE_ID)
-        mViewModel.loadPlaceDetail(placeId, getString(R.string.google_places_api_key))
+        mViewModel.loadPlaceDetail(placeId, getString(R.string.google_maps_api_key))
         mViewModel.detailResponse.observe(this,
             Observer { it ->
                 it?.let {

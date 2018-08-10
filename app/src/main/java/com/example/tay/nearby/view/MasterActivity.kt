@@ -3,19 +3,24 @@ package com.example.tay.nearby.view
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import android.view.WindowManager
 import com.example.tay.nearby.R
 import com.example.tay.nearby.entity.Place
 import com.example.tay.nearby.adapter.PlaceAdapter
 import com.example.tay.nearby.viewmodel.ListPlaceViewModel
 import com.google.android.gms.location.places.PlaceDetectionClient
 import com.google.android.gms.location.places.Places
-import kotlinx.android.synthetic.main.activity_master.*
-import java.util.ArrayList
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.LatLng
 
-class MasterActivity : AppCompatActivity() {
+class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
         const val PLACE_ID = "com.example.tay.nearby.PLACE_DETAIL"
@@ -27,28 +32,29 @@ class MasterActivity : AppCompatActivity() {
     private lateinit var mAdapter: PlaceAdapter
 
     private var mLocation = ""
-    private val mPlaceList = ArrayList<Place>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_master)
-
         // TODO : Check location service
-
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this)
         mViewModel = ViewModelProviders.of(this)[ListPlaceViewModel::class.java]
-
-        rv_master.layoutManager = GridLayoutManager(this, 2)
-        mAdapter = PlaceAdapter(this, mPlaceList)
-        rv_master.adapter = mAdapter
-
         getDeviceLocation()
-/*        val scrollListener = object : EndlessRecyclerViewScrollListener(GridLayoutManager(this, 2)) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                if (nextPageToken != null) getPlace()
-            }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
-        rv_master.addOnScrollListener(scrollListener)*/
+
+        val mapFragment = supportFragmentManager
+                .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(p0: GoogleMap?) {
+        val sydney = LatLng(-33.852, 151.211)
+        p0?.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        p0?.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
     // TODO : get the highest likelyhodd for getplace
@@ -71,7 +77,7 @@ class MasterActivity : AppCompatActivity() {
     }
 
     private fun getPlace() {
-        mViewModel.loadPlace(mLocation, mRadius, "cafe", "", getString(R.string.google_places_api_key))
+        mViewModel.loadPlace(mLocation, mRadius, "cafe", "", getString(R.string.google_maps_api_key))
         mViewModel.apiResponse.observe(this,
                 Observer { apiResponse -> handleResponse(apiResponse) })
     }
