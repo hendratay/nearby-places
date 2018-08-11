@@ -1,4 +1,4 @@
-package com.example.tay.nearby.view
+package com.example.tay.nearby.view.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.tay.nearby.R
 import com.example.tay.nearby.adapter.GalleryAdapter
+import com.example.tay.nearby.view.activity.DetailActivity
 import kotlinx.android.synthetic.main.fragment_gallery.view.*
 
 class GalleryFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.example.tay.nearby.view
+package com.example.tay.nearby.view.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.tay.nearby.R
 import com.example.tay.nearby.adapter.PlaceAdapter.Companion.PHOTO_URL
+import com.example.tay.nearby.view.activity.DetailActivity
 import kotlinx.android.synthetic.main.fragment_about.view.*
 
 class AboutFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.example.tay.nearby.view
+package com.example.tay.nearby.view.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -6,6 +6,9 @@ import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.view.GravityCompat
+import android.view.Menu
+import android.view.MenuItem
 import android.view.WindowManager
 import com.example.tay.nearby.R
 import com.example.tay.nearby.entity.Place
@@ -19,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.activity_master.*
 
 class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -36,16 +40,56 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_master)
+        transparencyBar()
+        setupNavigationDrawer()
+        setupToolbar()
+        setupMap()
+
         // TODO : Check location service
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this)
         mViewModel = ViewModelProviders.of(this)[ListPlaceViewModel::class.java]
         getDeviceLocation()
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when(item?.itemId) {
+            android.R.id.home -> {
+                drawer_layout.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun transparencyBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
+    }
 
+    private fun setupNavigationDrawer() {
+        nav_view.setNavigationItemSelectedListener {
+            it.isChecked = true
+            drawer_layout.closeDrawers()
+            true
+        }
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
+        }
+    }
+
+    private fun setupMap() {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)

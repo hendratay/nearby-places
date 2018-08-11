@@ -4,10 +4,10 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.example.tay.nearby.view.AboutFragment
-import com.example.tay.nearby.view.GalleryFragment
+import com.example.tay.nearby.view.fragment.AboutFragment
+import com.example.tay.nearby.view.fragment.GalleryFragment
 import com.example.tay.nearby.R
-import com.example.tay.nearby.view.ReviewFragment
+import com.example.tay.nearby.view.fragment.ReviewFragment
 
 class DetailPagerAdapter(fm: FragmentManager, private val mContext: Context) : FragmentPagerAdapter(fm) {
 

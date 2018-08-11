@@ -20,19 +20,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key"/>
 
-        <activity android:name=".view.MasterActivity">
+        <activity android:name=".view.activity.MasterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.DetailActivity"
-            android:parentActivityName=".view.MasterActivity"
+        <activity android:name=".view.activity.DetailActivity"
+            android:parentActivityName=".view.activity.MasterActivity"
             tools:targetApi="jelly_bean">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.tay.nearby.view.MasterActivity" />
+                android:value="com.example.tay.nearby.view.activity.MasterActivity" />
         </activity>
 
     </application>

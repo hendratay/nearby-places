@@ -1,4 +1,4 @@
-package com.example.tay.nearby.view
+package com.example.tay.nearby.view.activity
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.tay.nearby.R
 import com.example.tay.nearby.adapter.DetailPagerAdapter
 import com.example.tay.nearby.entity.PlaceDetail
-import com.example.tay.nearby.view.MasterActivity.Companion.PLACE_ID
+import com.example.tay.nearby.view.activity.MasterActivity.Companion.PLACE_ID
 import com.example.tay.nearby.viewmodel.ListPlaceViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
