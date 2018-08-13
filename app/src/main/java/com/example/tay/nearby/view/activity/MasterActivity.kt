@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import com.example.tay.nearby.R
+import com.example.tay.nearby.adapter.PlaceTypePagerAdapter
 import com.example.tay.nearby.entity.Place
 import com.example.tay.nearby.adapter.PlaceAdapter
 import com.example.tay.nearby.viewmodel.ListPlaceViewModel
@@ -44,6 +45,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
         setupNavigationDrawer()
         setupToolbar()
         setupMap()
+        setupViewPager()
 
         // TODO : Check location service
         mPlaceDetectionClient = Places.getPlaceDetectionClient(this)
@@ -99,6 +101,10 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
         val sydney = LatLng(-33.852, 151.211)
         p0?.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         p0?.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    private fun setupViewPager() {
+        view_pager.adapter = PlaceTypePagerAdapter(supportFragmentManager, this)
     }
 
     // TODO : get the highest likelyhodd for getplace
