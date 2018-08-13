@@ -6,7 +6,7 @@ import com.example.tay.nearby.entity.PlaceDetail
 
 interface PlaceRepository {
 
-    fun loadPlaces(location: String, radius: String, type: String, pageToken: String, key: String): LiveData<List<Place>>
+    fun loadPlace(location: String, radius: String, type: String, pageToken: String, key: String): LiveData<List<Place>>
 
     fun loadPlaceDetail(placeId: String, key: String): LiveData<PlaceDetail>
 

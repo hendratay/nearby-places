@@ -27,14 +27,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.DetailActivity"
-            android:parentActivityName=".view.activity.MasterActivity"
-            tools:targetApi="jelly_bean">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.tay.nearby.view.activity.MasterActivity" />
-        </activity>
-
     </application>
 
 </manifest>

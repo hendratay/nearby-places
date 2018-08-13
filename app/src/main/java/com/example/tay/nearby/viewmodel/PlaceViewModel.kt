@@ -7,22 +7,22 @@ import com.example.tay.nearby.entity.PlaceDetail
 import com.example.tay.nearby.repository.PlaceRepository
 import com.example.tay.nearby.repository.PlaceRepositoryImplementation
 
-class ListPlaceViewModel: ViewModel() {
+class PlaceViewModel: ViewModel() {
 
     private val mPlaceRepository: PlaceRepository
-    lateinit var apiResponse: LiveData<List<Place>>
-    lateinit var detailResponse: LiveData<PlaceDetail>
+    private lateinit var placeResponse: LiveData<List<Place>>
+    private lateinit var placeDetailResponse: LiveData<PlaceDetail>
 
     init {
         mPlaceRepository = PlaceRepositoryImplementation()
     }
 
     fun loadPlace(location: String, radius: String, type: String, pageToken: String, key: String) {
-        apiResponse = mPlaceRepository.loadPlaces(location, radius, type, pageToken, key)
+        placeResponse = mPlaceRepository.loadPlace(location, radius, type, pageToken, key)
     }
 
     fun loadPlaceDetail(placeId: String, key: String) {
-        detailResponse = mPlaceRepository.loadPlaceDetail(placeId, key)
+        placeDetailResponse = mPlaceRepository.loadPlaceDetail(placeId, key)
     }
 
 }
