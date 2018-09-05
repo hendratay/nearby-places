@@ -4,11 +4,13 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import com.example.tay.nearby.R
-import com.example.tay.nearby.adapter.PlaceTypePagerAdapter
+import com.example.tay.nearby.adapter.PlaceTypeAdapter
+import com.example.tay.nearby.utils.RecyclerViewSnapHelper
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -19,6 +21,8 @@ import kotlinx.android.synthetic.main.activity_master.*
 
 class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    private lateinit var placeTypeAdapter: PlaceTypeAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_master)
@@ -26,7 +30,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
         setupNavigationDrawer()
         setupToolbar()
         setupMap()
-        setupViewPager()
+        setupRecyclerView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -79,8 +83,13 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
         p0?.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
-    private fun setupViewPager() {
-        view_pager.adapter = PlaceTypePagerAdapter(supportFragmentManager, this)
+    private fun setupRecyclerView() {
+        placeTypeAdapter = PlaceTypeAdapter()
+        recycler_view_place_type.apply {
+            RecyclerViewSnapHelper().attachToRecyclerView(this)
+            layoutManager = LinearLayoutManager(this@MasterActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = placeTypeAdapter
+        }
     }
 
 }
