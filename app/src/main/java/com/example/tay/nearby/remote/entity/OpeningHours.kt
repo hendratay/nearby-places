@@ -1,4 +1,4 @@
-package com.example.tay.nearby.entity
+package com.example.tay.nearby.remote.entity
 
 import com.google.gson.annotations.SerializedName
 

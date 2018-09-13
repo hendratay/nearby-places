@@ -5,10 +5,10 @@ import android.arch.lifecycle.MutableLiveData
 import com.example.tay.nearby.App
 import com.example.tay.nearby.R
 import com.example.tay.nearby.api.GooglePlacesWebService
-import com.example.tay.nearby.entity.PlaceResponse
-import com.example.tay.nearby.entity.PlaceDetailResponse
-import com.example.tay.nearby.entity.PlaceDetail
-import com.example.tay.nearby.entity.Place
+import com.example.tay.nearby.remote.entity.PlaceResponse
+import com.example.tay.nearby.remote.entity.PlaceDetailResponse
+import com.example.tay.nearby.remote.entity.PlaceDetail
+import com.example.tay.nearby.remote.entity.Place
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Call

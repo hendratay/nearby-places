@@ -14,8 +14,4 @@ class App: Application() {
         App.context = applicationContext
     }
 
-    fun getContext(): Context {
-        return App.context
-    }
-
 }

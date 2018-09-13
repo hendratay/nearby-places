@@ -1,4 +1,4 @@
-package com.example.tay.nearby.adapter
+package com.example.tay.nearby.view.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

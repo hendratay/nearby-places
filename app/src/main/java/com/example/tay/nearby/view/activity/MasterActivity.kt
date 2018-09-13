@@ -9,7 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import com.example.tay.nearby.R
-import com.example.tay.nearby.adapter.PlaceTypeAdapter
+import com.example.tay.nearby.view.adapter.PlaceTypeAdapter
 import com.example.tay.nearby.utils.RecyclerViewSnapHelper
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
