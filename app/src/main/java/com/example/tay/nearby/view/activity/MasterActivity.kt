@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_master.*
 class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var placeTypeAdapter: PlaceTypeAdapter
+    private val listPlaceType: MutableList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,12 +85,18 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun setupRecyclerView() {
-        placeTypeAdapter = PlaceTypeAdapter()
+        populatePlaceType()
+        placeTypeAdapter = PlaceTypeAdapter(listPlaceType)
         recycler_view_place_type.apply {
             RecyclerViewSnapHelper().attachToRecyclerView(this)
             layoutManager = LinearLayoutManager(this@MasterActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = placeTypeAdapter
         }
+    }
+
+    private fun populatePlaceType() {
+        val placeTypeArray = resources.getStringArray(R.array.place_type_array)
+        for (placeType in placeTypeArray) listPlaceType.add(placeType)
     }
 
 }
