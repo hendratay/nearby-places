@@ -25,4 +25,12 @@ class PlaceViewModel: ViewModel() {
         placeDetailResponse = mPlaceRepository.loadPlaceDetail(placeId, key)
     }
 
+    fun getPlace(): LiveData<List<Place>> {
+        return placeResponse
+    }
+
+    fun getPlaceDetail(): LiveData<PlaceDetail> {
+        return placeDetailResponse
+    }
+
 }

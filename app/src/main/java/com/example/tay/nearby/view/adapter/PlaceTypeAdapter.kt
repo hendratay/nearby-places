@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import com.example.tay.nearby.R
 import kotlinx.android.synthetic.main.item_place_type.view.*
 
-class PlaceTypeAdapter(private val listPlaceType: List<String>): RecyclerView.Adapter<PlaceTypeAdapter.PlaceTypeViewHolder>() {
+class PlaceTypeAdapter(private val listPlaceType: List<String>,
+                       private val clickListener: (String) -> Unit): RecyclerView.Adapter<PlaceTypeAdapter.PlaceTypeViewHolder>() {
 
     inner class PlaceTypeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(placeType: String) {
+        fun bind(placeType: String, clickListener: (String) -> Unit) {
             itemView.txt_place_type_name.text = placeType
+            itemView.setOnClickListener { clickListener(placeType) }
         }
     }
 
@@ -24,7 +26,7 @@ class PlaceTypeAdapter(private val listPlaceType: List<String>): RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: PlaceTypeViewHolder, position: Int) {
-        holder.bind(listPlaceType[position])
+        holder.bind(listPlaceType[position], clickListener)
     }
 
 }

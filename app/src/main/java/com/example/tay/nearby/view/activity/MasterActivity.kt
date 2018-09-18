@@ -1,5 +1,7 @@
 package com.example.tay.nearby.view.activity
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,8 +11,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import com.example.tay.nearby.R
+import com.example.tay.nearby.remote.entity.Place
 import com.example.tay.nearby.view.adapter.PlaceTypeAdapter
 import com.example.tay.nearby.utils.RecyclerViewSnapHelper
+import com.example.tay.nearby.viewmodel.PlaceViewModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -22,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_master.*
 class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var placeTypeAdapter: PlaceTypeAdapter
+    private lateinit var placeViewModel: PlaceViewModel
     private val listPlaceType: MutableList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +91,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setupRecyclerView() {
         populatePlaceType()
-        placeTypeAdapter = PlaceTypeAdapter(listPlaceType)
+        placeTypeAdapter = PlaceTypeAdapter(listPlaceType) { placeTypeClick(it) }
         recycler_view_place_type.apply {
             RecyclerViewSnapHelper().attachToRecyclerView(this)
             layoutManager = LinearLayoutManager(this@MasterActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -97,6 +102,15 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun populatePlaceType() {
         val placeTypeArray = resources.getStringArray(R.array.place_type_array)
         for (placeType in placeTypeArray) listPlaceType.add(placeType)
+    }
+
+    private fun placeTypeClick(placeType: String) {
+        placeViewModel = ViewModelProviders.of(this)[PlaceViewModel::class.java]
+//        placeViewModel.loadPlace("-33.852, 151.221", "100", placeType, "", "")
+        placeViewModel.getPlace().observe(this,
+                Observer<List<Place>> {
+
+                })
     }
 
 }
