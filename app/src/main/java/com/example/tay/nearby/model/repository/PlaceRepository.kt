@@ -1,8 +1,8 @@
-package com.example.tay.nearby.repository
+package com.example.tay.nearby.model.repository
 
 import android.arch.lifecycle.LiveData
-import com.example.tay.nearby.remote.entity.Place
-import com.example.tay.nearby.remote.entity.PlaceDetail
+import com.example.tay.nearby.model.remote.entity.Place
+import com.example.tay.nearby.model.remote.entity.PlaceDetail
 
 interface PlaceRepository {
 

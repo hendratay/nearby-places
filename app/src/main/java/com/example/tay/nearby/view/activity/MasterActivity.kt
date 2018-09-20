@@ -11,7 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import com.example.tay.nearby.R
-import com.example.tay.nearby.remote.entity.Place
+import com.example.tay.nearby.model.remote.entity.Place
 import com.example.tay.nearby.view.adapter.PlaceTypeAdapter
 import com.example.tay.nearby.utils.RecyclerViewSnapHelper
 import com.example.tay.nearby.viewmodel.PlaceViewModel

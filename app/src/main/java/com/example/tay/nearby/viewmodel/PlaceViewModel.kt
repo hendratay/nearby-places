@@ -2,10 +2,10 @@ package com.example.tay.nearby.viewmodel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import com.example.tay.nearby.remote.entity.Place
-import com.example.tay.nearby.remote.entity.PlaceDetail
-import com.example.tay.nearby.repository.PlaceRepository
-import com.example.tay.nearby.repository.PlaceRepositoryImplementation
+import com.example.tay.nearby.model.remote.entity.Place
+import com.example.tay.nearby.model.remote.entity.PlaceDetail
+import com.example.tay.nearby.model.repository.PlaceRepository
+import com.example.tay.nearby.model.repository.PlaceRepositoryImplementation
 
 class PlaceViewModel: ViewModel() {
 

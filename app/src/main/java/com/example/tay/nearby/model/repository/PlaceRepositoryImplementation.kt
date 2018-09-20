@@ -1,14 +1,14 @@
-package com.example.tay.nearby.repository
+package com.example.tay.nearby.model.repository
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.example.tay.nearby.App
 import com.example.tay.nearby.R
 import com.example.tay.nearby.api.GooglePlacesWebService
-import com.example.tay.nearby.remote.entity.PlaceResponse
-import com.example.tay.nearby.remote.entity.PlaceDetailResponse
-import com.example.tay.nearby.remote.entity.PlaceDetail
-import com.example.tay.nearby.remote.entity.Place
+import com.example.tay.nearby.model.remote.entity.PlaceResponse
+import com.example.tay.nearby.model.remote.entity.PlaceDetailResponse
+import com.example.tay.nearby.model.remote.entity.PlaceDetail
+import com.example.tay.nearby.model.remote.entity.Place
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Call
