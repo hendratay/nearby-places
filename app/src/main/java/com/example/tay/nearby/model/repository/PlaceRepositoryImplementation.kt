@@ -3,13 +3,15 @@ package com.example.tay.nearby.model.repository
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.example.tay.nearby.App
-import com.example.tay.nearby.R
+import com.example.tay.nearby.BuildConfig
 import com.example.tay.nearby.api.GooglePlacesWebService
 import com.example.tay.nearby.model.remote.entity.PlaceResponse
 import com.example.tay.nearby.model.remote.entity.PlaceDetailResponse
 import com.example.tay.nearby.model.remote.entity.PlaceDetail
 import com.example.tay.nearby.model.remote.entity.Place
 import okhttp3.Cache
+import okhttp3.HttpUrl
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,6 +32,7 @@ class PlaceRepositoryImplementation: PlaceRepository {
         val cacheSize = 10 * 1024 * 1024 // 10 MB
         val cache = Cache(App.context.cacheDir, cacheSize.toLong())
         val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(GooglePlacesInterceptor())
                 .cache(cache)
                 .build()
         retrofit = Retrofit.Builder()
@@ -40,9 +43,9 @@ class PlaceRepositoryImplementation: PlaceRepository {
         mGooglePlacesWebService = retrofit.create(GooglePlacesWebService::class.java)
     }
 
-    override fun loadPlace(location: String, radius: String, type: String, pageToken: String, key: String): LiveData<List<Place>> {
+    override fun loadPlace(location: String, radius: String, type: String): LiveData<List<Place>> {
         val liveData = MutableLiveData<List<Place>>()
-        val call = mGooglePlacesWebService.getPlace(location, radius, type, pageToken, App.context.getString(R.string.google_maps_api_key))
+        val call = mGooglePlacesWebService.getPlace(location, radius, type)
         call.enqueue(object : Callback<PlaceResponse> {
             override fun onResponse(call: Call<PlaceResponse>, response: Response<PlaceResponse>) {
                 liveData.value = response.body()?.places
@@ -54,9 +57,9 @@ class PlaceRepositoryImplementation: PlaceRepository {
         return liveData
     }
 
-    override fun loadPlaceDetail(placeId: String, key: String): LiveData<PlaceDetail> {
+    override fun loadPlaceDetail(placeId: String): LiveData<PlaceDetail> {
         val liveData = MutableLiveData<PlaceDetail>()
-        val call = mGooglePlacesWebService.getPlaceDetail(placeId, App.context.getString(R.string.google_maps_api_key))
+        val call = mGooglePlacesWebService.getPlaceDetail(placeId)
         call.enqueue(object : Callback<PlaceDetailResponse> {
             override fun onResponse(call: Call<PlaceDetailResponse>, responsePlace: Response<PlaceDetailResponse>) {
                 liveData.value = responsePlace.body()?.placeDetailResponse
@@ -68,4 +71,13 @@ class PlaceRepositoryImplementation: PlaceRepository {
         return liveData
     }
 
+}
+
+class GooglePlacesInterceptor: Interceptor {
+    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+        val url: HttpUrl = chain.request().url().newBuilder()
+                .addQueryParameter("key", BuildConfig.GOOGLE_PLACES_API_KEY)
+                .build()
+        return chain.proceed(chain.request().newBuilder().addHeader("Accept", "application/json").url(url).build())
+    }
 }

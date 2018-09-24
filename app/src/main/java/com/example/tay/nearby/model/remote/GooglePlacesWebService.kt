@@ -11,8 +11,7 @@ interface GooglePlacesWebService {
     @GET("maps/api/place/nearbysearch/json")
     fun getPlace(@Query("location") location: String,
                  @Query("radius") radius: String,
-                 @Query("type") type: String,
-                 @Query("pagetoken") pageToken: String): Call<PlaceResponse>
+                 @Query("type") type: String): Call<PlaceResponse>
 
     @GET("maps/api/place/details/json")
     fun getPlaceDetail(@Query("placeId") placeId: String): Call<PlaceDetailResponse>

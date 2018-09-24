@@ -27,6 +27,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "google_maps_api_key", "${getProperty("local.properties", "GOOGLE_MAPS_API_KEY")}"
+        buildConfigField "String", "GOOGLE_PLACES_API_KEY", "\"${getProperty("local.properties", "GOOGLE_MAPS_API_KEY")}\""
     }
     buildTypes {
         release {

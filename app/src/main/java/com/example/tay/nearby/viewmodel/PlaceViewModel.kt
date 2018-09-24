@@ -17,12 +17,12 @@ class PlaceViewModel: ViewModel() {
         mPlaceRepository = PlaceRepositoryImplementation()
     }
 
-    fun loadPlace(location: String, radius: String, type: String, pageToken: String, key: String) {
-        placeResponse = mPlaceRepository.loadPlace(location, radius, type, pageToken, key)
+    fun loadPlace(location: String, radius: String, type: String) {
+        placeResponse = mPlaceRepository.loadPlace(location, radius, type)
     }
 
-    fun loadPlaceDetail(placeId: String, key: String) {
-        placeDetailResponse = mPlaceRepository.loadPlaceDetail(placeId, key)
+    fun loadPlaceDetail(placeId: String) {
+        placeDetailResponse = mPlaceRepository.loadPlaceDetail(placeId)
     }
 
     fun getPlace(): LiveData<List<Place>> {

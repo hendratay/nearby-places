@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -106,10 +107,10 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun placeTypeClick(placeType: String) {
         placeViewModel = ViewModelProviders.of(this)[PlaceViewModel::class.java]
-//        placeViewModel.loadPlace("-33.852, 151.221", "100", placeType, "", "")
+        placeViewModel.loadPlace("-33.852, 151.221", "10000", placeType)
         placeViewModel.getPlace().observe(this,
                 Observer<List<Place>> {
-
+                    Log.d("PLACE", it.toString())
                 })
     }
 

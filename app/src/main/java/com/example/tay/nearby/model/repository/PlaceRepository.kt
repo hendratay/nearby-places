@@ -6,8 +6,8 @@ import com.example.tay.nearby.model.remote.entity.PlaceDetail
 
 interface PlaceRepository {
 
-    fun loadPlace(location: String, radius: String, type: String, pageToken: String, key: String): LiveData<List<Place>>
+    fun loadPlace(location: String, radius: String, type: String): LiveData<List<Place>>
 
-    fun loadPlaceDetail(placeId: String, key: String): LiveData<PlaceDetail>
+    fun loadPlaceDetail(placeId: String): LiveData<PlaceDetail>
 
 }
