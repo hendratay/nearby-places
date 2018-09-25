@@ -15,6 +15,7 @@ import com.example.tay.nearby.R
 import com.example.tay.nearby.model.remote.entity.Place
 import com.example.tay.nearby.view.adapter.PlaceTypeAdapter
 import com.example.tay.nearby.utils.RecyclerViewSnapHelper
+import com.example.tay.nearby.view.adapter.PlaceAdapter
 import com.example.tay.nearby.viewmodel.PlaceViewModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,12 +28,14 @@ import kotlinx.android.synthetic.main.activity_master.*
 class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var placeTypeAdapter: PlaceTypeAdapter
+    private lateinit var placeAdapter: PlaceAdapter
     private lateinit var placeViewModel: PlaceViewModel
     private val listPlaceType: MutableList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_master)
+        placeViewModel = ViewModelProviders.of(this)[PlaceViewModel::class.java]
         transparencyBar()
         setupNavigationDrawer()
         setupToolbar()
@@ -106,11 +109,10 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun placeTypeClick(placeType: String) {
-        placeViewModel = ViewModelProviders.of(this)[PlaceViewModel::class.java]
-        placeViewModel.loadPlace("-33.852, 151.221", "10000", placeType)
+        placeViewModel.loadPlace("1.128780, 104.040340", "50000", placeType)
         placeViewModel.getPlace().observe(this,
                 Observer<List<Place>> {
-                    Log.d("PLACE", it.toString())
+                    Log.d("GOOGLE PLACES", it.toString())
                 })
     }
 
