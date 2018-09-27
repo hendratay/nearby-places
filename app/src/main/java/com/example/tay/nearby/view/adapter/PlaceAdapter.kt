@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.tay.nearby.R
-import com.example.tay.nearby.model.remote.entity.Place
+import com.example.tay.nearby.model.Place
 
 class PlaceAdapter(private val context: Context,
                    private val listPlace: List<Place>): RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>() {
