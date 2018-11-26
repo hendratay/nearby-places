@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Nearby</string>
     <string name="search">Search</string>
+    <string name="saved_permission">Saved Permission</string>
+    <string name="notice_asking_enable_location_permission">Please Enable Location Permission</string>
+    <string name="notice_enable_location_permission">Enable</string>
 
     <string-array name="place_type_array">
         <item>Restaurants</item>
