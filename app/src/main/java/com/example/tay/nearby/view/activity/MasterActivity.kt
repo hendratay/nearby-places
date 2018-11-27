@@ -8,9 +8,12 @@ import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
+import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -231,7 +234,17 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
                 Permission.savePermissionSharedPref(this, false)
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_ACCESS_FINE_LOCATION)
-                // todo: create snack bar to asking enable location permission
+                val snackBar = Snackbar.make(content_view, getString(R.string.notice_asking_enable_location_permission), Snackbar.LENGTH_SHORT)
+                snackBar.setAction(getString(R.string.notice_enable_location_permission)) {
+                    val intent = Intent()
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.apply {
+                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        data = uri
+                    }
+                    startActivity(intent)
+                }
+                snackBar.show()
             }
         }
     }
