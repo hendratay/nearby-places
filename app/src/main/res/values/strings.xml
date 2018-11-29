@@ -4,6 +4,7 @@
     <string name="saved_permission">Saved Permission</string>
     <string name="notice_asking_enable_location_permission">Please Enable Location Permission</string>
     <string name="notice_enable_location_permission">Enable</string>
+    <string name="notice_error_enable_location">Some Error Occur when Enable Location</string>
 
     <string-array name="place_type_array">
         <item>Restaurants</item>

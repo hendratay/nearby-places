@@ -13,7 +13,6 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -27,6 +26,8 @@ import com.example.tay.nearby.view.adapter.PlaceTypeAdapter
 import com.example.tay.nearby.utils.RecyclerViewSnapHelper
 import com.example.tay.nearby.view.adapter.PlaceAdapter
 import com.example.tay.nearby.view.utils.Permission
+import com.example.tay.nearby.view.utils.snackBar
+import com.example.tay.nearby.view.utils.toast
 import com.example.tay.nearby.viewmodel.PlaceViewModel
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -194,7 +195,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
                 try {
                     response.startResolutionForResult(this, REQUEST_CHECK_SETTINGS)
                 } catch (sendEx: IntentSender.SendIntentException) {
-                    // todo: show toast notify that error when enable location
+                    toast(this, getString(R.string.notice_error_enable_location))
                 }
             }
         }
@@ -234,8 +235,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
                 Permission.savePermissionSharedPref(this, false)
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_ACCESS_FINE_LOCATION)
-                val snackBar = Snackbar.make(content_view, getString(R.string.notice_asking_enable_location_permission), Snackbar.LENGTH_SHORT)
-                snackBar.setAction(getString(R.string.notice_enable_location_permission)) {
+                snackBar(content_view, getString(R.string.notice_asking_enable_location_permission), getString(R.string.notice_enable_location_permission)) {
                     val intent = Intent()
                     val uri = Uri.fromParts("package", packageName, null)
                     intent.apply {
@@ -244,7 +244,6 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                     startActivity(intent)
                 }
-                snackBar.show()
             }
         }
     }
