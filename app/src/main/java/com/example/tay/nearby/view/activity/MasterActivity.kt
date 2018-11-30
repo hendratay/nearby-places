@@ -25,6 +25,7 @@ import com.example.tay.nearby.model.Place
 import com.example.tay.nearby.view.adapter.PlaceTypeAdapter
 import com.example.tay.nearby.utils.RecyclerViewSnapHelper
 import com.example.tay.nearby.view.adapter.PlaceAdapter
+import com.example.tay.nearby.view.utils.Location
 import com.example.tay.nearby.view.utils.Permission
 import com.example.tay.nearby.view.utils.snackBar
 import com.example.tay.nearby.view.utils.toast
@@ -53,6 +54,9 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+
+    private var savedLatitude: Double? = null
+    private var savedLongitude: Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +92,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
                 when(resultCode) {
                     Activity.RESULT_OK -> startLocationUpdates()
                     Activity.RESULT_CANCELED -> {
-                        // todo: get saved latitude and longitude
+                        getSavedLocation()
                     }
                 }
             }
@@ -101,7 +105,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startLocationUpdates()
                 } else {
-                    // todo: get saved latitude and longitude
+                    getSavedLocation()
                 }
             }
         }
@@ -206,7 +210,9 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 for(location in locationResult.locations) {
-                    // todo: save location.latitude and location.longitude
+                    Location.saveLatLngSharedPref(this@MasterActivity,
+                            java.lang.Double.doubleToRawLongBits(location.latitude),
+                            java.lang.Double.doubleToRawLongBits(location.longitude))
                 }
                 stopLocationUpdates()
             }
@@ -246,6 +252,14 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    private fun getSavedLocation() {
+        val location = Location.getLatLngSharedPref(this)
+        savedLatitude = java.lang.Double.longBitsToDouble(location.first)
+        savedLongitude = java.lang.Double.longBitsToDouble(location.second)
+        if(savedLatitude == 0.0) savedLatitude = null
+        if(savedLongitude == 0.0) savedLongitude = null
     }
 
 }

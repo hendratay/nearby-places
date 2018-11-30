@@ -2,6 +2,8 @@
     <string name="app_name">Nearby</string>
     <string name="search">Search</string>
     <string name="saved_permission">Saved Permission</string>
+    <string name="saved_latitude">Saved Latitude</string>
+    <string name="saved_longitude">Saved Longitude</string>
     <string name="notice_asking_enable_location_permission">Please Enable Location Permission</string>
     <string name="notice_enable_location_permission">Enable</string>
     <string name="notice_error_enable_location">Some Error Occur when Enable Location</string>
