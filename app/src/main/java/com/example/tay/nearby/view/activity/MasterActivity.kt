@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
@@ -19,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import com.example.tay.nearby.R
 import com.example.tay.nearby.model.Place
@@ -30,6 +32,7 @@ import com.example.tay.nearby.view.utils.Permission
 import com.example.tay.nearby.view.utils.snackBar
 import com.example.tay.nearby.view.utils.toast
 import com.example.tay.nearby.viewmodel.PlaceViewModel
+import com.github.johnpersano.supertoasts.library.SuperActivityToast
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
@@ -241,15 +244,17 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
                 Permission.savePermissionSharedPref(this, false)
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_ACCESS_FINE_LOCATION)
-                snackBar(content_view, getString(R.string.notice_asking_enable_location_permission), getString(R.string.notice_enable_location_permission)) {
-                    val intent = Intent()
-                    val uri = Uri.fromParts("package", packageName, null)
-                    intent.apply {
-                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                        data = uri
+                snackBar(this, getString(R.string.notice_asking_enable_location_permission), getString(R.string.notice_enable_location_permission), object : SuperActivityToast.OnButtonClickListener {
+                    override fun onClick(view: View?, token: Parcelable?) {
+                        val intent = Intent()
+                        val uri = Uri.fromParts("package", packageName, null)
+                        intent.apply {
+                            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            data = uri
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
-                }
+                })
             }
         }
     }

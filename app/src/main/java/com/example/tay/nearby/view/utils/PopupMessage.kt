@@ -2,33 +2,34 @@ package com.example.tay.nearby.view.utils
 
 import android.content.Context
 import android.graphics.Color
-import android.support.design.widget.Snackbar
+import android.graphics.Typeface
 import android.view.Gravity
-import android.view.View
-import android.widget.TextView
-import android.widget.Toast
+import com.github.johnpersano.supertoasts.library.Style
+import com.github.johnpersano.supertoasts.library.SuperActivityToast
 
-fun toast(context: Context, message: CharSequence) {
-    val unicodeIcon = String(Character.toChars(0x26A1))
-    val toast = Toast.makeText(context, "$unicodeIcon    ️$message   $unicodeIcon",
-            android.widget.Toast.LENGTH_SHORT)
-    toast.view.apply {
-        setBackgroundColor(Color.BLACK)
-        findViewById<TextView>(android.R.id.message).textSize = 14F
-        findViewById<TextView>(android.R.id.message).setTextColor(Color.WHITE)
-    }
-    val xOffset = (56 * context.resources.displayMetrics.density).toInt()
-    toast.setGravity(Gravity.BOTTOM, 0, xOffset)
-    toast.show()
+fun toast(context: Context, message: String) {
+    val yOffset = (60 * context.resources.displayMetrics.density).toInt()
+    SuperActivityToast.create(context, Style(), Style.TYPE_STANDARD)
+            .setTouchToDismiss(true)
+            .setColor(Color.BLACK)
+            .setFrame(Style.FRAME_STANDARD)
+            .setGravity(Gravity.END, -8, yOffset)
+            .setText(message)
+            .setTextColor(Color.WHITE)
+            .setAnimations(Style.ANIMATIONS_POP)
+            .show()
 }
 
-fun snackBar(view: View, message: CharSequence, action: CharSequence, listener: (View) -> Unit) {
-    val snackBar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-    snackBar.view.apply {
-        setBackgroundColor(Color.BLACK)
-        findViewById<TextView>(android.support.design.R.id.snackbar_text).setTextColor(Color.LTGRAY)
-    }
-    snackBar.setAction(action, listener)
-    snackBar.setActionTextColor(Color.WHITE)
-    snackBar.show()
+fun snackBar(context: Context, message: String, action: String, listener: SuperActivityToast.OnButtonClickListener) {
+    SuperActivityToast.create(context, Style(), Style.TYPE_BUTTON)
+            .setTouchToDismiss(true)
+            .setButtonText(action)
+            .setButtonTextColor(Color.WHITE)
+            .setButtonTypefaceStyle(Typeface.NORMAL)
+            .setOnButtonClickListener(action, null, listener)
+            .setColor(Color.BLACK)
+            .setText(message)
+            .setTextColor(Color.LTGRAY)
+            .setAnimations(Style.ANIMATIONS_FLY)
+            .show()
 }
