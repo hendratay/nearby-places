@@ -33,6 +33,8 @@ import com.example.tay.nearby.view.utils.snackBar
 import com.example.tay.nearby.view.utils.toast
 import com.example.tay.nearby.viewmodel.PlaceViewModel
 import com.github.johnpersano.supertoasts.library.SuperActivityToast
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
@@ -47,6 +49,7 @@ import kotlinx.android.synthetic.main.activity_master.*
 const val TAG = "MasterActivity"
 const val REQUEST_ACCESS_FINE_LOCATION = 111
 const val REQUEST_CHECK_SETTINGS = 222
+const val GOOGLE_API_AVAILABILITY = 2404
 class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var placeTypeAdapter: PlaceTypeAdapter
@@ -72,6 +75,11 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
             startLocationUpdates()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isGooglePlayServicesAvailable(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -265,6 +273,23 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
         savedLongitude = java.lang.Double.longBitsToDouble(location.second)
         if(savedLatitude == 0.0) savedLatitude = null
         if(savedLongitude == 0.0) savedLongitude = null
+    }
+
+    /**
+     * Check Google Play Service is available, if not available show error dialog
+     */
+    private fun isGooglePlayServicesAvailable(activity: AppCompatActivity): Boolean {
+        val googleApiAvailability = GoogleApiAvailability.getInstance()
+        val status = googleApiAvailability.isGooglePlayServicesAvailable(activity)
+        if (status != ConnectionResult.SUCCESS) {
+            if(googleApiAvailability.isUserResolvableError(status)) {
+                val dialog = googleApiAvailability.getErrorDialog(activity, status, GOOGLE_API_AVAILABILITY)
+                dialog.setOnCancelListener { finish() }
+                dialog.show()
+            }
+            return false
+        }
+        return true
     }
 
 }
