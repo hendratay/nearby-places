@@ -27,10 +27,7 @@ import com.example.tay.nearby.model.Place
 import com.example.tay.nearby.view.adapter.PlaceTypeAdapter
 import com.example.tay.nearby.utils.RecyclerViewSnapHelper
 import com.example.tay.nearby.view.adapter.PlaceAdapter
-import com.example.tay.nearby.view.utils.Location
-import com.example.tay.nearby.view.utils.Permission
-import com.example.tay.nearby.view.utils.snackBar
-import com.example.tay.nearby.view.utils.toast
+import com.example.tay.nearby.view.utils.*
 import com.example.tay.nearby.viewmodel.PlaceViewModel
 import com.github.johnpersano.supertoasts.library.SuperActivityToast
 import com.google.android.gms.common.ConnectionResult
@@ -173,6 +170,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
             RecyclerViewSnapHelper().attachToRecyclerView(this)
             layoutManager = LinearLayoutManager(this@MasterActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = placeTypeAdapter
+            addItemDecoration(LinePagerIndicatorDecoration())
         }
     }
 
