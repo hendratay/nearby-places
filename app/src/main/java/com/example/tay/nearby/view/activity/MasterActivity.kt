@@ -17,6 +17,7 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.PagerSnapHelper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -25,7 +26,6 @@ import android.view.WindowManager
 import com.example.tay.nearby.R
 import com.example.tay.nearby.model.Place
 import com.example.tay.nearby.view.adapter.PlaceTypeAdapter
-import com.example.tay.nearby.utils.RecyclerViewSnapHelper
 import com.example.tay.nearby.view.adapter.PlaceAdapter
 import com.example.tay.nearby.view.utils.*
 import com.example.tay.nearby.viewmodel.PlaceViewModel
@@ -167,7 +167,7 @@ class MasterActivity : AppCompatActivity(), OnMapReadyCallback {
         populatePlaceType()
         placeTypeAdapter = PlaceTypeAdapter(listPlaceType) { placeTypeClick(it) }
         recycler_view_place_type.apply {
-            RecyclerViewSnapHelper().attachToRecyclerView(this)
+            PagerSnapHelper().attachToRecyclerView(this)
             layoutManager = LinearLayoutManager(this@MasterActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = placeTypeAdapter
             addItemDecoration(LinePagerIndicatorDecoration())
